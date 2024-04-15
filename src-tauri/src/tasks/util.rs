@@ -4,11 +4,11 @@ use rand::Rng;
 #[derive(Debug, Clone, PartialEq)]
 pub struct BooleanFunction {
     func: String,
-    count_arguments: i32,
+    count_arguments: u8,
 }
 
 impl BooleanFunction {
-    const MAX_COUNT_ARGS: i32 = 10;
+    const MAX_COUNT_ARGS: u8 = 10;
 
     fn check_valid_value(str: &String) -> bool {
         let mut ok = true;
@@ -17,7 +17,7 @@ impl BooleanFunction {
         }
         ok
     }
-    fn check_valid_size(len: usize) -> Result<(bool, i32), &'static str> {
+    fn check_valid_size(len: usize) -> Result<(bool, u8), &'static str> {
         let mut r = 1usize;
         let mut count = 1;
 
@@ -46,14 +46,10 @@ impl BooleanFunction {
 
     /// Возвращает остаточную булевую функцию по номеру аргумента и его значению
     /// Индексация с 0 и идёт справо налево
-    pub fn remainde_boolean_function(&self, num_arg: i32, value: bool) -> Result<String, &'static str> {
+    pub fn remainde_boolean_function(&self, num_arg: u8, value: bool) -> Result<String, &'static str> {
         // возвращает string :<
         // прикол в том, что булевая функция из одного аргумента вернет вектор функции длиной 1
         // это является невалидным значением для структуры util::BooleanFunction
-
-        if num_arg < 0 {
-            return Err("Argument number less than 0.");
-        }
 
         if num_arg >= self.count_arguments {
             return Err("Argument number greater than maximum.");
@@ -63,7 +59,7 @@ impl BooleanFunction {
         let mut string = String::new();
 
         for (i, ch) in self.func.chars().enumerate() {
-            if (i / len & 1) as i32 == value as i32 {
+            if (i / len & 1) as u8 == value as u8 {
                 string.push(ch);
             }
 
@@ -73,21 +69,21 @@ impl BooleanFunction {
     }
 
     /// Возвращает случайную булевую функцию из n аргументов
-    pub fn with_count_args(n: i32) -> Self {
+    pub fn with_count_args(n: u8) -> Self {
         let n = std::cmp::max(n, 1);
         let n = std::cmp::min(n, Self::MAX_COUNT_ARGS);
 
         let mut string = String::new();
         for _ in 0..(1i32<<n) {
             let val = get_random(2);
-            string.push(std::char::from_digit(val as u32, 10).unwrap());
+            string.push(std::char::from_digit(val, 10).unwrap());
         }
 
         BooleanFunction::from(string).unwrap()
     }
 
 
-    pub fn get_count_args(&self) -> i32 {
+    pub fn get_count_args(&self) -> u8 {
         self.count_arguments
     }
 
@@ -106,7 +102,7 @@ impl BooleanFunction {
 
 }
 
-pub fn get_random(n: i32) -> i32 {
+pub fn get_random(n: u32) -> u32 {
     let mut rng = rand::thread_rng();
     let random_number = rng.gen_range(0..n);
 
@@ -200,6 +196,11 @@ mod tests {
             println!("{:?}", i);
         }
 
+    }
+
+    #[test]
+    fn test_mx_len_bool_func() {
+        BooleanFunction::with_count_args(60);
     }
 
 }

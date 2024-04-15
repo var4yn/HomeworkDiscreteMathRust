@@ -56,6 +56,7 @@ fn is_monotone_boolean_function(
     // рассмотреть каждый разряд
     for _ in 0..func.get_count_args() {
         // сравнить значения
+        #[allow(unused_assignments)]
         for mut j in 0..vals.len() {
             if j / len & 1 == 1 {
                 j += len;

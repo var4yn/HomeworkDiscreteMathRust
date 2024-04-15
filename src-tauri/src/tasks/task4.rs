@@ -3,7 +3,7 @@ use super::util;
 /// Система предлагает вектор функции, пользователь выбирает «имя» (одно из 16).
 
 /// 16 бинарных булевых функций
-static BYNARY_BOOLEAN_FUNCS: [(&'static str, &'static str); 16] = [
+static BINARY_BOOLEAN_FUNCS: [(&'static str, &'static str); 16] = [
     ("0000", "0"),
     ("0001", "x ∧ y"),
     ("0010", "x ↛ y"),
@@ -23,14 +23,14 @@ static BYNARY_BOOLEAN_FUNCS: [(&'static str, &'static str); 16] = [
 ];
 
 /// Возвращает вектор функции
-fn get_random_bynary_boolean_func() -> (&'static str, i32) {
-    let i = util::get_random(16);
-    (BYNARY_BOOLEAN_FUNCS[i as usize].0, i)
+fn get_random_bynary_boolean_func() -> (&'static str, usize) {
+    let i = util::get_random(BINARY_BOOLEAN_FUNCS.len() as u32) as usize;
+    (BINARY_BOOLEAN_FUNCS[i as usize].0, i)
 }
 
 /// Сравнивает по вектору функции совпадение по индексу в массиве
-fn check_equal_binary_boolean_func(func: String, index: i32) -> bool {
-    BYNARY_BOOLEAN_FUNCS[index as usize].0 == func
+fn check_equal_binary_boolean_func(func: String, index: usize) -> bool {
+    BINARY_BOOLEAN_FUNCS[index].0 == func
 }
 
 

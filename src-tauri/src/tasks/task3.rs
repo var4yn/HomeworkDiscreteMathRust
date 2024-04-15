@@ -4,7 +4,7 @@ use super::util;
 fn boolean_function_from_remainde_func(
     func0: String,
     func1: String,
-    num_arg: u32,
+    num_arg: u8,
 ) -> Result<util::BooleanFunction, &'static str> {
     // проверка на валидность num_arg
     if 1 << num_arg >= func0.len() + func1.len() {

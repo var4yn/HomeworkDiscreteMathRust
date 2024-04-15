@@ -5,7 +5,7 @@ use super::util;
 fn remainde_boolean_function(
     boolean_function: util::BooleanFunction,
     value: bool,
-    num_arg: i32,
+    num_arg: u8,
 ) -> Result<String, &'static str> {
     let num_arg = boolean_function.get_count_args() - 1 - num_arg;
     boolean_function.remainde_boolean_function(num_arg, value)

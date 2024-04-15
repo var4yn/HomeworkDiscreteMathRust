@@ -7,16 +7,16 @@ use tauriapp::tasks::util;
 
 #[tauri::command]
 fn get_boolean_function(n: &str) -> Result<String, &'static str> {
-    let Ok(n) = n.parse::<i32>() else {
-        return Err("Ошибка парсинга! Ожидалось значение типа i32");
+    let Ok(n) = n.parse::<u8>() else {
+        return Err("Ошибка парсинга! Ожидалось значение типа u8");
     };
     Ok(tauriapp::tasks::util::BooleanFunction::with_count_args(n).get_func().into())
 }
 
 #[tauri::command]
 fn get_remind_function(func: &str, n: &str, value: bool) -> Result<String, &'static str> {
-    let Ok(n) = n.parse::<i32>() else {
-        return Err("Ошибка парсинга! Ожидалось значение типа i32");
+    let Ok(n) = n.parse::<u8>() else {
+        return Err("Ошибка парсинга! Ожидалось значение типа u8");
     };
     if n == 0 {
         return Err("Аргумент должен быть больше нуля");
