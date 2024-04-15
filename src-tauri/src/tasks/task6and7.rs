@@ -70,7 +70,7 @@ fn brute_func_vals(
 
         match expression.evaluate(&vars) {
             Ok(cur) => {
-                // если значение функции не совпало со значением выраэения
+                // если значение функции не совпало со значением выражения
                 // то возвращаем false
                 if func_val != cur {
                     return Ok(false);

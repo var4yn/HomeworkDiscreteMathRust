@@ -1,4 +1,4 @@
-mod tasks {
+pub mod tasks {
     pub mod util;
     pub mod task2;
     pub mod task3;

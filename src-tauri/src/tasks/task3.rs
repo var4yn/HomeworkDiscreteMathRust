@@ -24,7 +24,7 @@ fn boolean_function_from_remainde_func(
         string.push( a[ i/len & 1 ].next().unwrap() );
     }
 
-    Ok(util::BooleanFunction::from(string).unwrap())
+    util::BooleanFunction::from(string)
 }
 
 
@@ -47,7 +47,7 @@ mod tests {
 
     #[test]
     fn test_error() {
-        let b = boolean_function_from_remainde_func("1111".to_string(), "0000".to_string(), 3);
+        let b = boolean_function_from_remainde_func("1111".to_string(), "0000".to_string(), 0);
         match b {
             Ok(_b) => {
                 //

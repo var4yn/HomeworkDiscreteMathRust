@@ -8,6 +8,8 @@ pub struct BooleanFunction {
 }
 
 impl BooleanFunction {
+    const MAX_COUNT_ARGS: i32 = 10;
+
     fn check_valid_value(str: &String) -> bool {
         let mut ok = true;
         for i in str.chars() {
@@ -15,16 +17,19 @@ impl BooleanFunction {
         }
         ok
     }
-    fn check_valid_size(len: usize) -> (bool, i32) {
+    fn check_valid_size(len: usize) -> Result<(bool, i32), &'static str> {
         let mut r = 1usize;
         let mut count = 1;
 
         while r << 1 < len {
+            if count >= Self::MAX_COUNT_ARGS {
+                return Err("Maximum length of Boolean Function exceeded.");
+            }
             r <<= 1;
             count += 1;
         }
 
-        return (1usize << count == len, count);
+        return Ok((1usize << count == len, count));
     }
     
     pub fn from(str: impl Into<String>) -> Result<Self, &'static str> {
@@ -32,10 +37,10 @@ impl BooleanFunction {
         if !Self::check_valid_value(&str) {
             return Err("Invalid function value. Function must be consist by 0 or 1.")
         }
-        if let (true, len) = Self::check_valid_size(str.len()) {
-            Ok(BooleanFunction{func: str, count_arguments: len})
-        } else {
-            Err("Invalid function length. Function length must be a power of two.")
+        match Self::check_valid_size(str.len()) {
+            Ok((true, len)) => Ok(BooleanFunction{func: str, count_arguments: len}),
+            Ok((false, _)) => Err("Invalid function length. Function length must be a power of two."),
+            Err(e) => Err(e)
         }
     }
 
@@ -46,9 +51,13 @@ impl BooleanFunction {
         // прикол в том, что булевая функция из одного аргумента вернет вектор функции длиной 1
         // это является невалидным значением для структуры util::BooleanFunction
 
-        if num_arg >= self.count_arguments || num_arg < 0 {
-            return Err("Argument number greater than maximum.");
+        if num_arg < 0 {
+            return Err("Argument number less than 0.");
         }
+
+        if num_arg >= self.count_arguments {
+            return Err("Argument number greater than maximum.");
+        }        
 
         let len = 1usize << num_arg;
         let mut string = String::new();
@@ -65,7 +74,8 @@ impl BooleanFunction {
 
     /// Возвращает случайную булевую функцию из n аргументов
     pub fn with_count_args(n: i32) -> Self {
-        let n = std::cmp::min(n, 31);
+        let n = std::cmp::max(n, 1);
+        let n = std::cmp::min(n, Self::MAX_COUNT_ARGS);
 
         let mut string = String::new();
         for _ in 0..(1i32<<n) {

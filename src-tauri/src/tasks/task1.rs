@@ -4,7 +4,7 @@ use super::util;
 
 /// Теперь используется ассоциативная функция util::BooleanFunction::with_count_args().
 #[deprecated]
-pub fn get_bool_func_from_n(n: i32) -> util::BooleanFunction {
+fn get_bool_func_from_n(n: i32) -> util::BooleanFunction {
     if n >= 32 { 
        panic!("max value for n is 31");
     }
