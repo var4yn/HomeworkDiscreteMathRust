@@ -123,7 +123,7 @@ const Task2 = () => {
                     <input placeholder="True or False" maxLength="1" value={argValue} onInput={trueOrFalseInputHandler}></input>
                 </div>
                 <div className="">
-                    <input placeholder="Введите номер аргумента" value={numArg} maxLength="2" onInput={handleArgsInput}></input>
+                    <input placeholder="Введите номер аргумента" value={numArg} maxLength="1" onInput={handleArgsInput}></input>
                     <div className="px-3 py-1 text-slate-600"><MxArgRender value={mxArg}/></div>
                 </div>
                 

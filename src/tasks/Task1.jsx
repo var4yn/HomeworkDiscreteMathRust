@@ -14,7 +14,7 @@ const Task1 = () => {
     const [booleanFunction, setBooleanFunction] = useState("-");
     
     async function onClick(n) {
-        setBooleanFunction( await invoke("get_boolean_function", { n }) );
+        setBooleanFunction( await invoke("get_random_bool_func", { n }) );
     }
     
 

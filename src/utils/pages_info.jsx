@@ -1,7 +1,6 @@
 import Task1 from "../tasks/Task1";
 import Task2 from "../tasks/Task2";
-
-import transition from "../transition";
+import Task3 from "../tasks/Task3";
 
 const pages_info = {
 
@@ -17,7 +16,7 @@ const pages_info = {
     },
     "3" : {
         title: "Task3",
-        component: Task1,
+        component: Task3,
         description: "На вход — два вектора (это нулевая и единичная остаточные функции по некоторому аргументу), номер аргумента, на выход — вектор функции.",
     },
     "4" : {

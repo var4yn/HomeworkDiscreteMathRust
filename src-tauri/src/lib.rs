@@ -1,6 +1,5 @@
-pub mod tasks {
+mod tasks {
     pub mod util;
-    pub mod task2;
     pub mod task3;
     pub mod task4;
     pub mod task5;
@@ -10,9 +9,20 @@ pub mod tasks {
     pub mod task12;
 }
 
-pub mod parser;
+mod client_functions {
+    pub mod page1;
+    pub mod page2;
+}
 
-fn main() {
-    //
+mod parser;
+
+pub fn main() {
+    tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![
+            client_functions::page1::get_random_bool_func,
+            client_functions::page2::get_remind_function,
+        ])
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 
 }
