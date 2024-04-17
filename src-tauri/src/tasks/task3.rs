@@ -1,9 +1,9 @@
 use super::util;
 
 /// На вход — два вектора (это нулевая и единичная остаточные функции по некоторому аргументу), номер аргумента, на выход — вектор функции.
-fn boolean_function_from_remainde_func(
-    func0: String,
-    func1: String,
+pub fn boolean_function_from_remainde_func(
+    func0: &str,
+    func1: &str,
     num_arg: u8,
 ) -> Result<util::BooleanFunction, &'static str> {
     // проверка на валидность num_arg
@@ -35,19 +35,19 @@ mod tests {
 
     #[test]
     fn test_func() {
-        let res = boolean_function_from_remainde_func("1110".to_string(), "0111".to_string(), 1);
+        let res = boolean_function_from_remainde_func("1110", "0111", 1);
         assert_eq!(util::BooleanFunction::from("11011011").unwrap(), res.unwrap());
 
-        let res = boolean_function_from_remainde_func("1101".to_string(), "1011".to_string(), 2);
+        let res = boolean_function_from_remainde_func("1101", "1011", 2);
         assert_eq!(util::BooleanFunction::from("11011011").unwrap(), res.unwrap());
 
-        let res = boolean_function_from_remainde_func("0000".to_string(), "1100".to_string(), 0);
+        let res = boolean_function_from_remainde_func("0000", "1100", 0);
         assert_eq!(util::BooleanFunction::from("01010000").unwrap(), res.unwrap());
     }
 
     #[test]
     fn test_error() {
-        let b = boolean_function_from_remainde_func("1111".to_string(), "0000".to_string(), 0);
+        let b = boolean_function_from_remainde_func("1111", "0000", 0);
         match b {
             Ok(_b) => {
                 //

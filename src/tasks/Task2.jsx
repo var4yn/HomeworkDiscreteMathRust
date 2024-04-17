@@ -1,76 +1,16 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 
-const OkRender = () => {
-    return (
-        <div className="text-green-600">
-            ok
-        </div>
-    )
-}
+import { OkRender, ErrorRender, InvalidRender, OutputRender, MxArgRender } from "../utils/renders";
+import { useInputHandler } from "../utils/handlers";
 
-const InvalidRender = () => {
-    return (
-        <div className="text-red-600">
-            invalid
-        </div>
-    )
-}
 
-const MxArgRender = ({value}) => {
-    const message = `valid max value argument: ${value}`;
-    return (
-        <div>
-            {message}
-        </div>
-    )
-}
-
-const ErrorRender = ( {err} ) => {
-
-    return (
-        <div className="text-red-500">
-            {`Ошибка: ${err}`}
-        </div>
-    )
-}
-
-const OutputRender = ({output}) => {
-    return (
-        <div>
-            {output}
-        </div>
-    )
-}
-
-const __lg = (n) => {
-    let cnt = 0;
-    let r = 1;
-    while( r * 2 <= n ) {
-        r *= 2;
-        cnt += 1;
-    }
-    return cnt;
-}
 
 const Task2 = () => {
-    const [inputValue, setInputValue] = useState("");
-    const [isOk, setOk] = useState(false);
-    
-    const [mxArg, setMxArg] = useState(0);
 
-    async function handleInput(event) {
-        const value = event.target.value;
-        const ch = value[value.length - 1];
-        if (ch === "1" || ch === "0" || ch === undefined) {
-            setInputValue(value);            
-            const mx = __lg(value.length);
-            setMxArg(mx);
-
-            const ok = value.length > 1 && ( value.length & (value.length - 1) ) === 0;
-            setOk( ok );
-        }
-    }
+    const {
+        inputValue, isOk, mxArg, handleInput, setOk
+    } = useInputHandler( {mn: 1} );
 
     const [numArg, setNumArg] = useState("");
 

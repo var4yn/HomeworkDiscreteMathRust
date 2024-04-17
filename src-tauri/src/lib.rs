@@ -12,6 +12,8 @@ mod tasks {
 mod client_functions {
     pub mod page1;
     pub mod page2;
+    pub mod page3;
+    pub mod client_utils;
 }
 
 mod parser;
@@ -21,6 +23,7 @@ pub fn main() {
         .invoke_handler(tauri::generate_handler![
             client_functions::page1::get_random_bool_func,
             client_functions::page2::get_remind_function,
+            client_functions::page3::get_func_from_remainde,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -35,11 +35,11 @@ impl BooleanFunction {
     pub fn from(str: impl Into<String>) -> Result<Self, &'static str> {
         let str = str.into();
         if !Self::check_valid_value(&str) {
-            return Err("Invalid function value. Function must be consist by 0 or 1.")
+            return Err("Function must be consist by 0 or 1.")
         }
         match Self::check_valid_size(str.len()) {
             Ok((true, len)) => Ok(BooleanFunction{func: str, count_arguments: len}),
-            Ok((false, _)) => Err("Invalid function length. Function length must be a power of two."),
+            Ok((false, _)) => Err("Function length must be a power of two."),
             Err(e) => Err(e)
         }
     }
@@ -144,7 +144,7 @@ impl<'a> Iterator for BooleanFunctionIterator<'a> {
         }
         self.end = ok;
         self.current += 1;
-        Some((vc, self.func_it.next().unwrap() == '1'))
+        Some((vc, self.func_it.next() == Some('1')))
     }
 }
 
