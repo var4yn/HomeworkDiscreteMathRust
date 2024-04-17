@@ -16,7 +16,7 @@ fn get_expression(
     let symbol = vec!['&', 'v'];
     let j = func_value_skip as usize;
 
-    for (vc, f_val) in util::BooleanFunctionIterator::new(&func) {
+    for (vc, f_val) in func {
         if f_val == func_value_skip {
             continue;
         }

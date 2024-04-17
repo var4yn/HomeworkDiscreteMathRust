@@ -109,6 +109,16 @@ pub fn get_random(n: u32) -> u32 {
     random_number
 }
 
+impl<'a> IntoIterator for &'a BooleanFunction {
+    type Item = (Vec<bool>, bool);
+    type IntoIter = BooleanFunctionIterator<'a>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        BooleanFunctionIterator::new(&self)
+    }
+
+}
+
 /// Итератор по булевой функции
 /// Возвращает вектор текущих значений аргументов функции и текущее значение функции
 pub struct BooleanFunctionIterator<'a> {
@@ -193,6 +203,10 @@ mod tests {
         let it =  BooleanFunctionIterator::new(&ff);
         
         for i in it {
+            println!("{:?}", i);
+        }
+
+        for i in &ff {
             println!("{:?}", i);
         }
 

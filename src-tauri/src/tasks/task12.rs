@@ -106,7 +106,7 @@ fn create_groups(
     let mut groups: HashMap<usize, Vec< Vec<char> >> = HashMap::new();
     let mut mx_cnt = 0;
     // строим группы по количеству единиц в двоичных наборах
-    for (args, val) in util::BooleanFunctionIterator::new(&func) {
+    for (args, val) in func {
         if val == false {
             continue;
         }

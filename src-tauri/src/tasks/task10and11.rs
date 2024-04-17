@@ -100,7 +100,7 @@ fn is_linear_boolean_function(
 
 
     let mut ok = true;
-    for (i, (args, _)) in util::BooleanFunctionIterator::new(&func).enumerate() {
+    for (i, (args, _)) in func.into_iter().enumerate() {
         if matrix[i][i] != 1 {
             continue;
         }

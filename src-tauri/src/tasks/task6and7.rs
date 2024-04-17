@@ -62,7 +62,7 @@ fn brute_func_vals(
     func: util::BooleanFunction
 ) -> Result<bool, String> {
 
-    for (vc, func_val) in util::BooleanFunctionIterator::new(&func) {
+    for (vc, func_val) in &func {
         let mut vars = HashMap::new();
         for (i, &val) in vc.iter().enumerate() {
             vars.insert(format!("x{}", i + 1), val);
