@@ -142,14 +142,13 @@ impl<'a> Iterator for BooleanFunctionIterator<'a> {
             return None;
         }
         let mut ok = true;
-        let mut vc = Vec::new();
-        vc.resize(self.cnt, false);
+        let mut vc = vec![ false; self.cnt ];
 
         let mut len = 1;
         for j in (0..self.cnt).rev() {
-            let value = self.current / len & 1;
+            let current_value = self.current / len & 1;
             len *= 2;
-            vc[j] = value == 1;
+            vc[j] = current_value == 1;
             ok &= vc[j];
         }
         self.end = ok;

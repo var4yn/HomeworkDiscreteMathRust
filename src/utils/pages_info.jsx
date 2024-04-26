@@ -1,6 +1,7 @@
 import Task1 from "../tasks/Task1";
 import Task2 from "../tasks/Task2";
 import Task3 from "../tasks/Task3";
+import Task4 from "../tasks/Task4";
 
 const pages_info = {
 
@@ -21,7 +22,7 @@ const pages_info = {
     },
     "4" : {
         title: "Task4",
-        component: Task1,
+        component: Task4,
         description: "Игра. Узнать имя функции от 2-х аргументов. Система предлагает вектор функции, пользователь выбирает «имя» (одно из 16).",
     },
     "5" : {

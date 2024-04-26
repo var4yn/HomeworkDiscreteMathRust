@@ -23,14 +23,23 @@ static BINARY_BOOLEAN_FUNCS: [(&'static str, &'static str); 16] = [
 ];
 
 /// Возвращает вектор функции
-fn get_random_bynary_boolean_func() -> (&'static str, usize) {
+pub fn get_random_bynary_boolean_func() -> (&'static str, usize) {
     let i = util::get_random(BINARY_BOOLEAN_FUNCS.len() as u32) as usize;
     (BINARY_BOOLEAN_FUNCS[i as usize].0, i)
 }
 
 /// Сравнивает по вектору функции совпадение по индексу в массиве
-fn check_equal_binary_boolean_func(func: String, index: usize) -> bool {
+pub fn check_equal_binary_boolean_func(func: &str, index: usize) -> bool {
     BINARY_BOOLEAN_FUNCS[index].0 == func
+}
+
+pub fn get_name_funcs() -> Vec<&'static str> {
+    let mut vc = Vec::new();
+    for (_, name) in BINARY_BOOLEAN_FUNCS {
+        vc.push(name);
+    }
+
+    vc
 }
 
 
@@ -41,7 +50,7 @@ mod tests {
     #[test]
     fn test_game() {
         let r = get_random_bynary_boolean_func();
-        check_equal_binary_boolean_func(r.0.to_string(), r.1);
+        check_equal_binary_boolean_func(r.0, r.1);
     }
 
 }

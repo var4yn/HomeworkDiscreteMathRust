@@ -6,50 +6,36 @@ use crate::parser;
 
 // Игра. ДНФ. Система предлагает вектор функции. Пользователь вводит ДНФ. 
 // Система определяет правильно или нет введена ДНФ.
-pub mod task6 {
-    use super::*;
 
-    /// На вход булевая функция и expression пользователя
-    pub fn check_dnf(
-        func: util::BooleanFunction,
-        expression: &str
-    ) -> Result<bool, String> {
-        // выражение
-        let result_expression = parser::parse::get_ast_tree(expression);
-    
-        if let Err(e) = result_expression {
-            return Err(e.to_string());
-        }
-        let expression = result_expression.unwrap();
-        if !parser::validate::is_dnf(&expression) {
-            return Err("This is not DNF".to_string());
-        }
-        brute_func_vals(expression, func)
+/// На вход булевая функция и expression пользователя
+pub fn check_dnf(
+    func: util::BooleanFunction,
+    expression: &str
+) -> Result<bool, String> {
+    // выражение
+    let expression = parser::parse::get_ast_tree(expression)?;
+
+    if !parser::validate::is_dnf(&expression) {
+        return Err("This is not DNF".to_string());
     }
+    brute_func_vals(expression, func)
 }
 
 // Игра. КНФ. Система предлагает вектор функции.
 // Пользователь вводит КНФ. Система определяет правильно или нет введена КНФ.
-pub mod task7 {
-    use super::*;
 
-    /// На вход булевая функция и expression пользователя
-    pub fn check_knf(
-        func: util::BooleanFunction,
-        expression: &str
-    ) -> Result<bool, String> {
-        // выражение
-        let result_expression = parser::parse::get_ast_tree(expression);
-    
-        if let Err(e) = result_expression {
-            return Err(e.to_string());
-        }
-        let expression = result_expression.unwrap();
-        if !parser::validate::is_knf(&expression) {
-            return Err("This is not KNF".to_string());
-        }
-        brute_func_vals(expression, func)
+/// На вход булевая функция и expression пользователя
+pub fn check_knf(
+    func: util::BooleanFunction,
+    expression: &str
+) -> Result<bool, String> {
+    // выражение
+    let expression = parser::parse::get_ast_tree(expression)?;
+
+    if !parser::validate::is_knf(&expression) {
+        return Err("This is not KNF".to_string());
     }
+    brute_func_vals(expression, func)
 }
 
 
@@ -129,11 +115,11 @@ mod tests {
     fn test_dnf() {
         let func_vector = "00010111";
         let func = util::BooleanFunction::from(func_vector).unwrap();
-        let r = task6::check_dnf(func.clone(), "-x1&x2&x3 v x1&-x2&x3 v x1&x2&-x3 v x1&x2&x3").unwrap();
+        let r = check_dnf(func.clone(), "-x1&x2&x3 v x1&-x2&x3 v x1&x2&-x3 v x1&x2&x3").unwrap();
         
         assert_eq!(r, true);
 
-        let r = task6::check_dnf(func, "-x1&x2&x3 v x1&-x2&x3 v x1&x2&-x3 v x1&x2&-x3").unwrap();
+        let r = check_dnf(func, "-x1&x2&x3 v x1&-x2&x3 v x1&x2&-x3 v x1&x2&-x3").unwrap();
         
         assert_eq!(r, false);
     }
@@ -142,11 +128,11 @@ mod tests {
     fn test_knf() {
         let func_vector = "00010111";
         let func = util::BooleanFunction::from(func_vector).unwrap();
-        let r = task7::check_knf(func.clone(), " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
+        let r = check_knf(func.clone(), " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
 
         assert_eq!(r, true);
 
-        let r = task7::check_knf(func, " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v -x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
+        let r = check_knf(func, " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v -x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
 
         assert_eq!(r, false);
 
@@ -157,7 +143,7 @@ mod tests {
         let func = "10110011";
         let func = util::BooleanFunction::from(func).unwrap();
 
-        let r = task6::check_dnf(func, "x2 v -x1&-x3").unwrap();
+        let r = check_dnf(func, "x2 v -x1&-x3").unwrap();
 
         assert_eq!(r, true);
         

@@ -149,7 +149,7 @@ fn build_unions(
     union_groups
 }
 
-/// Переводит в вектор символов из векторов bool
+/// Переводит из векторов bool в вектор символов
 fn to_chars_from_vc_bool(
     value: Vec<bool>,
 ) -> Vec<char> {
@@ -187,7 +187,7 @@ fn is_similar(
 #[cfg(test)]
 mod tests {
 
-    use crate::tasks::task6and7::task6::check_dnf;
+    use crate::tasks::task6and7::check_dnf;
 
     use super::*;
 

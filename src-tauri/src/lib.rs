@@ -13,6 +13,7 @@ mod client_functions {
     pub mod page1;
     pub mod page2;
     pub mod page3;
+    pub mod page4;
     pub mod client_utils;
 }
 
@@ -24,6 +25,7 @@ pub fn main() {
             client_functions::page1::get_random_bool_func,
             client_functions::page2::get_remind_function,
             client_functions::page3::get_func_from_remainde,
+            client_functions::page4::get_name_funcs,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

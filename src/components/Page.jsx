@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Page = ( { title, description, children, isMain } ) => {
 
     return (
-        <div className="h-screen flex-col flex font-mono bg-slate-100">
+        <div className=" min-h-screen max-h-full flex-col flex font-mono bg-slate-100">
             <Header title={title}/>
             <div className="px-7 lg:px-28 select-none text-center text-slate-400 text-[14px] lg:text-[16px]">
                 {description}

@@ -27,7 +27,8 @@ const Task3 = () => {
     }, [right.inputValue, left.inputValue]);
 
     useEffect(() => {
-        if(rightOk && left.isOk && right.isOk && numArg.length !== 0) {
+        
+        if(left.isOk && right.isOk && numArg.length !== 0 && right.inputValue.length === left.inputValue.length) {
             invoke( "get_func_from_remainde", { func0: left.inputValue, func1: right.inputValue, n: numArg } )
             .then((message) => {
                 setErr("");

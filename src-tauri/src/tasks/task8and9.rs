@@ -16,12 +16,17 @@ fn get_expression(
     let symbol = vec!['&', 'v'];
     let j = func_value_skip as usize;
 
-    for (vc, f_val) in func {
+    for (current_vals, f_val) in func {
         if f_val == func_value_skip {
             continue;
         }
         let mut line = String::new();
-        for (i, &value) in vc.iter().enumerate() {
+
+        if !expr.is_empty() {
+            line.push(symbol[j ^ 1]);
+            line.push('\n');
+        }
+        for (i, &value) in current_vals.iter().enumerate() {
             if i == 0 {
                 line.push('(');
             }
@@ -30,18 +35,14 @@ fn get_expression(
             } else {
                 line.push_str(&format!("-x{}", i + 1));
             }
-            if i == vc.len() - 1 {
-                line.push_str(")");
+            if i == current_vals.len() - 1 {
+                line.push(')');
             } else {
                 line.push(symbol[j]);
             }
         }
-        line.push(symbol[j ^ 1]);
-        line.push('\n');
         expr.push_str(&line);
     }
-    expr.pop(); // удалить \n
-    expr.pop(); // удалить последний символ, соединяющий скобки
 
     expr
 }
@@ -73,7 +74,7 @@ mod tests {
         let expr = get_fdnf(&func);
         //println!("{}", expr);
 
-        let r = task6and7::task6::check_dnf(func, &expr).unwrap();
+        let r = task6and7::check_dnf(func, &expr).unwrap();
 
         assert_eq!(r, true);
     }
@@ -84,7 +85,7 @@ mod tests {
         let expr = get_fknf(&func);
         //println!("{}", expr);
 
-        let r = task6and7::task7::check_knf(func, &expr).unwrap();
+        let r = task6and7::check_knf(func, &expr).unwrap();
 
         assert_eq!(r, true);
     }
@@ -95,7 +96,14 @@ mod tests {
         let func = util::BooleanFunction::with_count_args(4);
         let expr = get_fdnf(&func);
 
-        let r = task6and7::task6::check_dnf(func, &expr).unwrap();
+        let r = task6and7::check_dnf(func, &expr).unwrap();
+        assert_eq!(r, true);
+
+
+        let func = util::BooleanFunction::with_count_args(4);
+        let expr = get_fknf(&func);
+
+        let r = task6and7::check_knf(func, &expr).unwrap();
         assert_eq!(r, true);
 
     }
