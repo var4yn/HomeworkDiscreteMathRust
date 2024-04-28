@@ -1,3 +1,5 @@
+use std::cmp::min;
+
 use super::util;
 /// Игра. Узнать имя функции от 2-х аргументов.
 /// Система предлагает вектор функции, пользователь выбирает «имя» (одно из 16).
@@ -22,15 +24,10 @@ static BINARY_BOOLEAN_FUNCS: [(&'static str, &'static str); 16] = [
     ("1111", "1"),
 ];
 
-/// Возвращает вектор функции
-pub fn get_random_bynary_boolean_func() -> (&'static str, usize) {
+/// Возвращает вектор функции и его индекс
+pub fn get_random_bynary_boolean_func() -> (&'static str, &'static str) {
     let i = util::get_random(BINARY_BOOLEAN_FUNCS.len() as u32) as usize;
-    (BINARY_BOOLEAN_FUNCS[i as usize].0, i)
-}
-
-/// Сравнивает по вектору функции совпадение по индексу в массиве
-pub fn check_equal_binary_boolean_func(func: &str, index: usize) -> bool {
-    BINARY_BOOLEAN_FUNCS[index].0 == func
+    (BINARY_BOOLEAN_FUNCS[i].0, BINARY_BOOLEAN_FUNCS[i].1)
 }
 
 pub fn get_name_funcs() -> Vec<&'static str> {
@@ -40,17 +37,4 @@ pub fn get_name_funcs() -> Vec<&'static str> {
     }
 
     vc
-}
-
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_game() {
-        let r = get_random_bynary_boolean_func();
-        check_equal_binary_boolean_func(r.0, r.1);
-    }
-
 }

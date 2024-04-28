@@ -26,6 +26,7 @@ pub fn main() {
             client_functions::page2::get_remind_function,
             client_functions::page3::get_func_from_remainde,
             client_functions::page4::get_name_funcs,
+            client_functions::page4::get_random_vector_func,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
