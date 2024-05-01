@@ -2,6 +2,7 @@ import Task1 from "../tasks/Task1";
 import Task2 from "../tasks/Task2";
 import Task3 from "../tasks/Task3";
 import Task4 from "../tasks/Task4";
+import Task5 from "../tasks/Task5";
 
 const pages_info = {
 
@@ -27,7 +28,7 @@ const pages_info = {
     },
     "5" : {
         title: "Task5",
-        component: Task1,
+        component: Task5,
         description: " Игра. Существенные и фиктивные переменные. Система предлагает вектор функции. Пользователь выбирает существенные и фиктивные переменные.",
     },
     "6" : {

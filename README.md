@@ -1,4 +1,4 @@
-# Boolean Functions ( [Tauri](https://tauri.app/) )
+# Boolean Functions App with [Tauri](https://tauri.app/)
 _Изначально планировалось юзать Slint, но нет._
 
 ## Описание

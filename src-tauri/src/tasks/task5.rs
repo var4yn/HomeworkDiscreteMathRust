@@ -7,7 +7,7 @@ use super::util;
 /// На вход вектор функции
 /// Существенные и фиктивные переменные в динамическом массиве, где 0 - фиктивность, а 1 - существенность
 /// [0, 1, 0] означает, что переменная x1 фиктивна, x2 существенна, x3 фиктивна
-fn get_dummy_variable(
+pub fn get_dummy_variable(
     func: util::BooleanFunction,
 ) -> Vec<bool> {
     let mut vector = Vec::new();

@@ -23,7 +23,7 @@ impl Expression {
             Expression::Value(value) => Ok(*value),
             Expression::Variable(var) => {
                 if !vars.contains_key(var) {
-                    Err(format!("Not expected var : {}", var))
+                    Err(format!("Not expected var: '{}'", var))
                 } else {
                     Ok(vars.get(var).unwrap().clone())
                 }
@@ -58,6 +58,7 @@ impl Expression {
     }
 
     #[allow(dead_code)]
+    #[cfg(dev)]
     fn get_string(&self) -> String {
         match self {
             Expression::Value(value) => format!("{}", value),
@@ -196,8 +197,8 @@ pub mod validate {
 
     /// Обход графа в глубину
     /// Проверяет, что после определенной операции нет другой
-    /// Проще говоря, проверка на конъюнктор/дизъюнктор
-    /// в ( x1 & x2 & x3 ) - валидный конъюнктор, но (x1 & x2 & x3 v x4) - невалидный
+    /// Проще говоря, проверка на конъюнкт/дизъюнкт
+    /// в ( x1 & x2 & x3 ) - валидный конъюнкт, но (x1 & x2 & x3 v x4) - невалидный
     fn dfs(expression: &Expression, ch: char, mut flag: bool) -> bool {
         match expression {
             Expression::BinaryOp(op, left, right) => {

@@ -146,8 +146,17 @@ mod tests {
         let r = check_dnf(func, "x2 v -x1&-x3").unwrap();
 
         assert_eq!(r, true);
-        
+    }
 
+    #[test]
+    fn test_not_expected_variable() {
+        let func = "10110011";
+        let func = util::BooleanFunction::from(func).unwrap();
+
+        let Err(err) = check_dnf(func, "x2 v -x1&-x3 v x10") else {
+            panic!("expected error!");
+        };
+        assert_eq!(err.contains("x10"), true);
     }
 
 }
