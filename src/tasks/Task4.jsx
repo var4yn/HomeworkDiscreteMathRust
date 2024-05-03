@@ -1,9 +1,9 @@
 import PlayButton from "../components/PlayButton";
-import { ErrorRender, OutputRender } from "../utils/renders";
 
 import { useState, useEffect } from "react";
 
 import { invoke } from "@tauri-apps/api/tauri";
+import OutputComponent from "../components/OutputComponent";
 
 const CheckButton = ( {children, onClick, select, current, is_play} ) => {
     const base = "shadow-sm min-w-min min-h-min\
@@ -88,7 +88,7 @@ function Task4() {
                 ))}
             </div>
             <div className="flex flex-col justify-center items-center font-mono pt-6 select-none">
-                <div className="text-lg">{ err.length > 0 ? <ErrorRender err={err}/> : <OutputRender output={output}/> }</div>
+                <div className="text-lg"><OutputComponent err={err} output={output}/></div>
             </div>
             <div className="pt-4">
                 <PlayButton onClick={play}/>

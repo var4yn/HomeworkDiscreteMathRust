@@ -55,3 +55,22 @@ button {
   transform-origin: right;
 
 }
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  height: 2px;
+  background: #396cd8;
+  border-radius: 10px;
+  cursor: pointer;
+}

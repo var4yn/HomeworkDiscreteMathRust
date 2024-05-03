@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 
-import { OkRender, ErrorRender, InvalidRender, OutputRender, MxArgRender } from "../utils/renders";
+import { MxArgRender } from "../utils/renders";
 import { useInputHandler } from "../utils/handlers";
+import OutputComponent from "../components/OutputComponent";
+import OkOrInvalidComponent from "../components/OkOrInvalidComponent";
 
 
 
@@ -57,7 +59,7 @@ const Task2 = () => {
                 
                 <div className="col-span-2">
                     <input placeholder="Введите булевую функцию" value={inputValue} maxLength="32" onInput={handleInput}></input>
-                    <div className="px-3 py-1">{isOk === false ? <InvalidRender/> : <OkRender/>}</div>
+                    <div className="px-3 py-1"><OkOrInvalidComponent condition={isOk}/></div>
                 </div>
                 <div className="">
                     <input placeholder="True or False" maxLength="1" value={argValue} onInput={trueOrFalseInputHandler}></input>
@@ -71,7 +73,7 @@ const Task2 = () => {
             <div className="pt-8 text-center">
                 <div className="text-slate-600 text-sm select-none">Остаточная:</div>
                 <div className="pt-1 text-xl">
-                    { err.length > 0 ? <ErrorRender err={err}/> : <OutputRender output={output}/> }
+                    <OutputComponent err={err} output={output}/>
                 </div>
             </div>
         </>

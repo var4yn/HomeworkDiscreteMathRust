@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useInputHandler, useNumArgHandler } from "../utils/handlers";
 
-import { OkRender, ErrorRender, InvalidRender, OutputRender, MxArgRender } from "../utils/renders";
+import { OkRender, InvalidRender, MxArgRender } from "../utils/renders";
 
 import { invoke } from "@tauri-apps/api/tauri";
+import OutputComponent from "../components/OutputComponent";
+import OkOrInvalidComponent from "../components/OkOrInvalidComponent";
 
 const Task3 = () => {
 
@@ -49,11 +51,11 @@ const Task3 = () => {
                 
                 <div className="">
                     <input placeholder="Нулевая остаточная"maxLength="16" value={left.inputValue} onInput={left.handleInput}></input>
-                    <div className="px-3 py-1">{left.isOk === false ? <InvalidRender/> : <OkRender/>}</div>
+                    <div className="px-3 py-1"><OkOrInvalidComponent condition={left.isOk}/></div>
                 </div>
                 <div className="">
                     <input placeholder="Единичная остаточная" maxLength="16" value={right.inputValue} onInput={right.handleInput}></input>
-                    <div className="px-3 py-1">{rightOk === false ? <InvalidRender/> : <OkRender/>}</div>
+                    <div className="px-3 py-1"><OkOrInvalidComponent condition={rightOk}/></div>
                 </div>
                 <div className="">
                     <input placeholder="Номер аргумента" onInput={handleArgsInput} value={numArg} maxLength="1"></input>
@@ -64,7 +66,7 @@ const Task3 = () => {
             <div className="pt-8 text-center">
                 <div className="text-slate-600 text-sm select-none">Функция:</div>
                 <div className="pt-1 text-xl break-words mx-24">
-                    { err.length > 0 ? <ErrorRender err={err}/> : <OutputRender output={output}/> }
+                    <OutputComponent err={err} output={output}/>
                 </div>
             </div>
         </>

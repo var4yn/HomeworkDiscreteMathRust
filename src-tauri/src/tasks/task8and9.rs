@@ -67,7 +67,6 @@ mod tests {
 
     use super::*;
 
-
     #[test]
     fn test_fdnf() {
         let func = util::BooleanFunction::from("00010111").unwrap();

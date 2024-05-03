@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { invoke } from "@tauri-apps/api/tauri";
 
-import PlayButton from "../components/PlayButton";
-import CheckAnswerButton from "../components/CheckAnswerButton";
+import CheckAndPlayComponent from "../components/CheckAndPlayComponent";
+import OutputComponent from "../components/OutputComponent";
 
-import { OutputRender, ErrorRender } from "../utils/renders";
+import { getRandomFrom2to4 } from "../utils/util";
 
 const VarButton = ( {val, index, userVals, onClick} ) => {
     const baseStyle = "block border-2 py-1 px-1 text-center select-none cursor-pointer transition-colors ";
@@ -62,14 +62,12 @@ function Task5() {
     const [output, setOutput] = useState("-");
     const [err, setErr] = useState("");
 
-    const [isCheck, setIsCheck] = useState(false);
+    const [isCheck, setIsCheck] = useState(true);
 
-    const getRandom = () => {
-        return Math.floor( Math.random()*3 ) + 2;
-    }
+    
 
     async function play() {
-        const n = getRandom();
+        const n = getRandomFrom2to4();
         invoke("get_random_bool_func", { n: n + "" })
         .then(async msg => {
             setIsCheck(false);
@@ -79,6 +77,7 @@ function Task5() {
             setVals(r);
             setOutput(msg);
             setErr("");
+            
             //console.log(r);
         })
         .catch(err => {
@@ -101,7 +100,7 @@ function Task5() {
         <>
             <div className="">
                 <div className="text-4xl select-none flex justify-center">
-                    { err.length > 0 ? <ErrorRender err={err}/> : <OutputRender output={output}/> }
+                    <OutputComponent err={err} output={output}/>
                 </div>
                 <div className="grid mt-4 gap-3 grid-flow-col">
                     {
@@ -115,11 +114,10 @@ function Task5() {
                 </div>
                 
             </div>
-            
-            <div className="pt-8 grid gap-4 grid-flow-col">                
-                <CheckAnswerButton onClick={check}/>
-                <PlayButton onClick={play}/>
+            <div className="pt-8">
+                <CheckAndPlayComponent checkCallback={check} playCallback={play}/>
             </div>
+            
         </>
     )
 

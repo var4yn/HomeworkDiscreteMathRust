@@ -10,6 +10,7 @@ pub fn boolean_function_from_remainde_func(
     if 1 << num_arg >= func0.len() + func1.len() {
         return Err("Invalid value of num_arg.");
     }
+    // проверка на равенство остаточных функций
     if func0.len() != func1.len() {
         return Err("Expected equal lengths.");
     }

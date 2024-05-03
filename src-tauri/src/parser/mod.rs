@@ -1,6 +1,14 @@
 /// Парсер логических выражений
-
 use std::collections::{HashMap, HashSet};
+
+macro_rules! unwrap_or_return {
+    ( $val:expr, $err:expr ) => {
+        match $val {
+            Some(x) => x,
+            None => return Err($err),
+        }
+    }
+}
 
 #[derive(Debug)]
 enum Token {
@@ -22,35 +30,24 @@ impl Expression {
         match self {
             Expression::Value(value) => Ok(*value),
             Expression::Variable(var) => {
-                if !vars.contains_key(var) {
-                    Err(format!("Not expected var: '{}'", var))
-                } else {
-                    Ok(vars.get(var).unwrap().clone())
+                match vars.get(var) {
+                    Some(val) => return Ok(val.clone()),
+                    None => return Err(format!("Not expected var: '{}'", var)),
                 }
-                
             },
             Expression::UnaryOp(op, expr) => {
-                let val = expr.evaluate(vars);
-                if let Err(e) = val {
-                    return Err(e);
-                }
+                let val = expr.evaluate(vars)?;
                 match op {
-                    '-' => Ok(!val.unwrap()),
+                    '-' => Ok(!val),
                     _ => Err("Invalid unary operator!".to_string()),
                 }
             }
             Expression::BinaryOp(op, left, right) => {
-                let l_val = left.evaluate(vars);
-                if let Err(e) = l_val {
-                    return Err(e);
-                }
-                let r_val = right.evaluate(vars);
-                if let Err(e) = r_val {
-                    return Err(e);
-                }
+                let l_val = left.evaluate(vars)?;
+                let r_val = right.evaluate(vars)?;
                 match op {
-                    '&' => Ok(l_val.unwrap() && r_val.unwrap()),
-                    'v' => Ok(l_val.unwrap() || r_val.unwrap()),
+                    '&' => Ok(l_val && r_val),
+                    'v' => Ok(l_val || r_val),
                     _ => Err("Invalid binary operator!".to_string()),
                 }
             }
@@ -120,11 +117,7 @@ pub mod parse {
     
     fn parse_expression(tokens: &mut Vec<Token>, precedence: u8) -> Result<Expression, String> {
     
-        let lhs = parse_term(tokens);
-        if let Err(e) = lhs {
-            return Err(e);
-        }
-        let mut lhs = lhs?;
+        let mut lhs = parse_term(tokens)?;
     
         while let Some(&Token::Operator(op)) = tokens.last() {
             let op_precedence = match op {
@@ -138,12 +131,9 @@ pub mod parse {
             }
     
             tokens.pop();
-            let rhs = parse_expression(tokens, op_precedence);
-            if let Err(e) = rhs {
-                return Err(e);
-            }
+            let rhs = parse_expression(tokens, op_precedence)?;
             
-            lhs = Expression::BinaryOp(op, Box::new(lhs), Box::new(rhs?));
+            lhs = Expression::BinaryOp(op, Box::new(lhs), Box::new(rhs));
         }
     
         
@@ -152,7 +142,7 @@ pub mod parse {
     }
     
     fn parse_term(tokens: &mut Vec<Token>) -> Result<Expression, String> {
-        match tokens.pop().unwrap() {
+        match unwrap_or_return!(tokens.pop(), "Empty term!".to_string()) {
             Token::Value(val) => Ok(Expression::Value(val)),
             Token::Variable(var) => Ok(Expression::Variable(var)),
             Token::Operator(op) => {
@@ -193,28 +183,8 @@ pub mod parse {
 pub mod validate {
     use super::*;
 
-    /*
-
-    /// Обход графа в глубину
-    /// Проверяет, что после определенной операции нет другой
-    /// Проще говоря, проверка на конъюнкт/дизъюнкт
-    /// в ( x1 & x2 & x3 ) - валидный конъюнкт, но (x1 & x2 & x3 v x4) - невалидный
-    fn dfs(expression: &Expression, ch: char, mut flag: bool) -> bool {
-        match expression {
-            Expression::BinaryOp(op, left, right) => {
-                if *op != ch && flag {
-                    return false;
-                }
-                flag = *op == ch;
-                dfs(left, ch, flag) && dfs(right, ch, flag)
-            }
-            _ => true,
-        }
-    }
-    
-    */
-
-    /// комбинация функции dfs и dfs_t
+    /// с помощью dfs проверяет повторяются ли внутри конъюнтков/дизъюнктов переменные одного имени
+    /// проверяет валидность конъюнктов/дизъюнктов
     fn dfs_n(expression: &Expression, ch: char, mut flag: bool) -> (bool, HashSet<String>) {
         let mut set : HashSet<String> = HashSet::new();
     
@@ -259,51 +229,6 @@ pub mod validate {
     
     
     }
-    
-    /*
-    #[deprecated]
-    // проверяет на повторение переменных в выражении
-    // x1&x2&x2 -> false т.к. повторилось x2 
-    // (x1 v x2 v -x2 ) -> false т.к. повторилось x2
-    fn dfs_t(expression: &Expression, ch: char) -> (bool, HashSet<String>) {
-        let mut set : HashSet<String> = HashSet::new();
-    
-        match expression {
-            Expression::BinaryOp(op, left, right) => {
-                let (ok_l, lv) = dfs_t(left, ch);
-                let (ok_r, rv) = dfs_t(right, ch);
-                let fl = ok_l && ok_r;
-                if *op == ch {
-                    // не должно быть повторений
-                    let mut ok = true && fl;
-                    set = lv;
-                    for i in rv {
-                        if set.contains(&i) {
-                            ok &= false;
-                        } else {
-                            set.insert(i);
-                        }
-                    }
-                    (ok, set)
-                } else {
-                    // повторения возможны
-                    for i in rv {
-                        set.insert(i);
-                    }
-                    (fl, set)
-                }
-            }
-            Expression::UnaryOp(_, expr) => {
-                dfs_t(expr, ch)
-            }
-            Expression::Variable(var) => {
-                set.insert(var.to_string());
-                (true, set)
-            }
-            _ => (true, set),
-        }
-    }
-    */
     
     pub fn is_dnf(expression: &Expression) -> bool {
         dfs_n(expression, '&', false).0
@@ -422,8 +347,6 @@ mod tests {
         let r = parse::get_ast_tree(expr);
         let result = r.unwrap().evaluate(&get_map_from_vals(vec![false])).unwrap();
         println!("result = {}", result);
-
-
     }
 
 }

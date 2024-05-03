@@ -3,6 +3,8 @@ import Task2 from "../tasks/Task2";
 import Task3 from "../tasks/Task3";
 import Task4 from "../tasks/Task4";
 import Task5 from "../tasks/Task5";
+import Task6 from "../tasks/Task6";
+import Task7 from "../tasks/Task7";
 
 const pages_info = {
 
@@ -33,12 +35,12 @@ const pages_info = {
     },
     "6" : {
         title: "Task6",
-        component: Task1,
+        component: Task6,
         description: "Игра. ДНФ. Система предлагает вектор функции. Пользователь вводит ДНФ. Система определяет правильно или нет введена ДНФ.",
     },
     "7" : {
         title: "Task7",
-        component: Task1,
+        component: Task7,
         description: "Игра. КНФ. Система предлагает вектор функции. Пользователь вводит КНФ. Система определяет правильно или нет введена КНФ.",
     },
     "8" : {

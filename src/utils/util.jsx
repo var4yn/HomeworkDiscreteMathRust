@@ -9,3 +9,7 @@ export function __lg  (n)  {
     }
     return cnt;
 }
+
+export function getRandomFrom2to4() {
+    return Math.floor( Math.random()*2 ) + 2;
+}

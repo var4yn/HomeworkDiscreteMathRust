@@ -8,10 +8,14 @@ use crate::parser;
 // Система определяет правильно или нет введена ДНФ.
 
 /// На вход булевая функция и expression пользователя
+/// Если функция не может иметь ДНФ, то она вернет ошибку
 pub fn check_dnf(
     func: util::BooleanFunction,
     expression: &str
 ) -> Result<bool, String> {
+    if !func.have_dnf() {
+        return Err("The function does not have knf".to_string())
+    }
     // выражение
     let expression = parser::parse::get_ast_tree(expression)?;
 
@@ -25,10 +29,14 @@ pub fn check_dnf(
 // Пользователь вводит КНФ. Система определяет правильно или нет введена КНФ.
 
 /// На вход булевая функция и expression пользователя
+/// Если функция не может иметь КНФ, то она вернет ошибку
 pub fn check_knf(
     func: util::BooleanFunction,
     expression: &str
 ) -> Result<bool, String> {
+    if !func.have_knf() {
+        return Err("function no has knf".to_string());
+    }
     // выражение
     let expression = parser::parse::get_ast_tree(expression)?;
 
@@ -40,16 +48,17 @@ pub fn check_knf(
 
 
 
-
-
-// перебор значений функции
+/// Перебор значений функции
 fn brute_func_vals(
     expression: parser::Expression,
     func: util::BooleanFunction
 ) -> Result<bool, String> {
 
+    // создание переменных
+    let mut vars = HashMap::new();
+    // пробег по вектору функции
     for (vc, func_val) in &func {
-        let mut vars = HashMap::new();
+        // установка значений для переменных на определенном двоичном наборе
         for (i, &val) in vc.iter().enumerate() {
             vars.insert(format!("x{}", i + 1), val);
         }
@@ -66,40 +75,7 @@ fn brute_func_vals(
                 return Err(e);
             }
         }
-
-
     }
-
-    /* старый код без итератора
-
-    for (i, ch) in func.get_func().char_indices() {
-        let mut vars = HashMap::new();
-        
-        let mut len = 1;
-        for j in (0..func.get_count_args()).rev() {
-            let var = format!("x{}", j + 1);
-            let value = i / len & 1;
-            len *= 2;
-            vars.insert(var, value == 1usize);
-        }
-
-        // подстановка значений
-        let func_val = ch == '1';
-        match expression.evaluate(&vars) {
-            Ok(cur) => {
-                // если значение функции не совпало со значением выраэения
-                // то возвращаем false
-                if func_val != cur {
-                    return Ok(false);
-                }
-            }
-            Err(e) => {
-                return Err(e);
-            }
-        }
-        
-    }
-    */
 
     Ok(true)
 }
@@ -110,6 +86,19 @@ fn brute_func_vals(
 mod tests {
     use super::*;
 
+    #[test]
+    fn test_dnf_0000() {
+        let func = util::BooleanFunction::from("0000").unwrap();
+        let r = check_dnf(func, "");
+        assert_eq!(r.is_err(), true);
+    }
+
+    #[test]
+    fn test_knf_1111() {
+        let func = util::BooleanFunction::from("1111").unwrap();
+        let r = check_knf(func, "");
+        assert_eq!(r.is_err(), true);
+    }
 
     #[test]
     fn test_dnf() {

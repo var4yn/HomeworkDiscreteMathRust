@@ -100,6 +100,14 @@ impl BooleanFunction {
         vector
     }
 
+    pub fn have_dnf(&self) -> bool {
+        self.func.contains('1')
+    }
+
+    pub fn have_knf(&self) -> bool {
+        self.func.contains('0')
+    }
+
 }
 
 pub fn get_random(n: u32) -> u32 {
@@ -212,8 +220,15 @@ mod tests {
     }
 
     #[test]
-    fn test_mx_len_bool_func() {
-        BooleanFunction::with_count_args(60);
+    fn test_func_0000_has_dnf() {
+        let r = BooleanFunction::from("0000").unwrap();
+        assert_eq!(r.have_dnf(), false);
+    }
+
+    #[test]
+    fn test_func_0000_has_knf() {
+        let r = BooleanFunction::from("1111").unwrap();
+        assert_eq!(r.have_knf(), false);
     }
 
 }
