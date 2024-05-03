@@ -234,7 +234,7 @@ pub mod validate {
         dfs_n(expression, '&', false).0
     }
 
-    pub fn is_knf(expression: &Expression) -> bool {
+    pub fn is_cnf(expression: &Expression) -> bool {
         dfs_n(expression, 'v', false).0
     }
 
@@ -303,29 +303,29 @@ mod tests {
 
 
     #[test]
-    fn test_parse_knf() {
+    fn test_parse_cnf() {
         // (x1 v x2 v ... v x10) & ( y v z )
 
         let expression = " (x1 v x2) & (x1 v x2) ";
 
-        assert_eq!(validate::is_knf(&parse::get_ast_tree(expression).unwrap()), true);
+        assert_eq!(validate::is_cnf(&parse::get_ast_tree(expression).unwrap()), true);
         let expression = " (x1) & (x2) ";
-        assert_eq!(validate::is_knf(&parse::get_ast_tree(expression).unwrap()), true);
+        assert_eq!(validate::is_cnf(&parse::get_ast_tree(expression).unwrap()), true);
         let expression = " x1 & x2 ";
-        assert_eq!(validate::is_knf(&parse::get_ast_tree(expression).unwrap()), true);
+        assert_eq!(validate::is_cnf(&parse::get_ast_tree(expression).unwrap()), true);
         let expression = " (x3vx2v-x1) & (x1vx2) & x3 ";
-        assert_eq!(validate::is_knf(&parse::get_ast_tree(expression).unwrap()), true);
+        assert_eq!(validate::is_cnf(&parse::get_ast_tree(expression).unwrap()), true);
         let expression = " x1 v x2 ";
-        assert_eq!(validate::is_knf(&parse::get_ast_tree(expression).unwrap()), true);
+        assert_eq!(validate::is_cnf(&parse::get_ast_tree(expression).unwrap()), true);
 
         let expression = " x2&x3& -x1 v x2 & -x2 ";
-        assert_eq!(validate::is_knf(&parse::get_ast_tree(expression).unwrap()), false);
+        assert_eq!(validate::is_cnf(&parse::get_ast_tree(expression).unwrap()), false);
         let expression = " x1 v -x1 ";
-        assert_eq!(validate::is_knf(&parse::get_ast_tree(expression).unwrap()), false);
+        assert_eq!(validate::is_cnf(&parse::get_ast_tree(expression).unwrap()), false);
     }
 
     #[test]
-    fn test_calculate_knf() {
+    fn test_calculate_cnf() {
         let expression = " (x1 v x2) & (x1 v x2) ";
 
         assert_eq!(parse::get_ast_tree(expression).unwrap().evaluate(&get_map_from_vals(vec![true, false])), Ok(true));

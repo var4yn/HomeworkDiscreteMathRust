@@ -5,13 +5,14 @@ import { MxArgRender } from "../utils/renders";
 import { useInputHandler } from "../utils/handlers";
 import OutputComponent from "../components/OutputComponent";
 import OkOrInvalidComponent from "../components/OkOrInvalidComponent";
+import InputBooleanFunction from "../components/InputBooleanFunction";
 
 
 
 const Task2 = () => {
 
     const {
-        inputValue, isOk, mxArg, handleInput, setOk
+        inputValue, isOk, mxArg, handleInput
     } = useInputHandler( {mn: 1} );
 
     const [numArg, setNumArg] = useState("");
@@ -58,8 +59,7 @@ const Task2 = () => {
             <div className="grid grid-cols-2 grid-rows-1 gap-4 select-none">
                 
                 <div className="col-span-2">
-                    <input placeholder="Введите булевую функцию" value={inputValue} maxLength="32" onInput={handleInput}></input>
-                    <div className="px-3 py-1"><OkOrInvalidComponent condition={isOk}/></div>
+                    <InputBooleanFunction isOk={isOk} handleInput={handleInput} inputValue={inputValue}/>
                 </div>
                 <div className="">
                     <input placeholder="True or False" maxLength="1" value={argValue} onInput={trueOrFalseInputHandler}></input>

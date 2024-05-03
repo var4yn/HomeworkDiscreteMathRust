@@ -6,6 +6,7 @@ import { OkRender, InvalidRender, MxArgRender } from "../utils/renders";
 import { invoke } from "@tauri-apps/api/tauri";
 import OutputComponent from "../components/OutputComponent";
 import OkOrInvalidComponent from "../components/OkOrInvalidComponent";
+import InputBooleanFunction from "../components/InputBooleanFunction";
 
 const Task3 = () => {
 
@@ -50,12 +51,21 @@ const Task3 = () => {
             <div className="grid grid-cols-2 grid-rows-1 gap-4 select-none">
                 
                 <div className="">
-                    <input placeholder="Нулевая остаточная"maxLength="16" value={left.inputValue} onInput={left.handleInput}></input>
-                    <div className="px-3 py-1"><OkOrInvalidComponent condition={left.isOk}/></div>
+                    <InputBooleanFunction
+                        isOk={left.isOk} inputValue={left.inputValue}
+                        handleInput={left.handleInput}
+                        placeholder={"Нулувая остаточная"}
+                        maxLength={16}
+                    />
                 </div>
                 <div className="">
-                    <input placeholder="Единичная остаточная" maxLength="16" value={right.inputValue} onInput={right.handleInput}></input>
-                    <div className="px-3 py-1"><OkOrInvalidComponent condition={rightOk}/></div>
+                    <InputBooleanFunction
+                        placeholder={"Единичная остаточная"}
+                        maxLength={16}
+                        inputValue={right.inputValue}
+                        handleInput={right.handleInput}
+                        isOk={rightOk}
+                    />
                 </div>
                 <div className="">
                     <input placeholder="Номер аргумента" onInput={handleArgsInput} value={numArg} maxLength="1"></input>

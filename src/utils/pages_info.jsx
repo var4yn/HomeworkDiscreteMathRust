@@ -5,6 +5,8 @@ import Task4 from "../tasks/Task4";
 import Task5 from "../tasks/Task5";
 import Task6 from "../tasks/Task6";
 import Task7 from "../tasks/Task7";
+import Task8 from "../tasks/Task8";
+import Task9 from "../tasks/Task9";
 
 const pages_info = {
 
@@ -45,12 +47,12 @@ const pages_info = {
     },
     "8" : {
         title: "Task8",
-        component: Task1,
+        component: Task8,
         description: "Пользователь вводит вектор функции. Система строит СДНФ.",
     },
     "9" : {
         title: "Task9",
-        component: Task1,
+        component: Task9,
         description: "Пользователь вводит вектор функции. Система строит СКНФ.",
     },
     "10" : {

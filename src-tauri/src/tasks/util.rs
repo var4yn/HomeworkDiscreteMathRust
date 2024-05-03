@@ -104,7 +104,7 @@ impl BooleanFunction {
         self.func.contains('1')
     }
 
-    pub fn have_knf(&self) -> bool {
+    pub fn have_cnf(&self) -> bool {
         self.func.contains('0')
     }
 
@@ -226,9 +226,9 @@ mod tests {
     }
 
     #[test]
-    fn test_func_0000_has_knf() {
+    fn test_func_0000_has_cnf() {
         let r = BooleanFunction::from("1111").unwrap();
-        assert_eq!(r.have_knf(), false);
+        assert_eq!(r.have_cnf(), false);
     }
 
 }

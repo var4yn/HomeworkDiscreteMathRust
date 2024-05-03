@@ -13,7 +13,7 @@ fn get_expression(
     func_value_skip: bool, // значение функции, которое скипаем
 ) -> String {
     let mut expr = String::new();
-    let symbol = vec!['&', 'v'];
+    let operator = vec!['&', 'v'];
     let j = func_value_skip as usize;
 
     for (current_vals, f_val) in func {
@@ -21,24 +21,29 @@ fn get_expression(
             continue;
         }
         let mut line = String::new();
-
+        // если выражение непустое, то добавить оператор
         if !expr.is_empty() {
-            line.push(symbol[j ^ 1]);
-            line.push('\n');
+            line.push(' ');
+            line.push(operator[j ^ 1]);
+            line.push(' ');
         }
+        // пробег по текущему двоичному набору
         for (i, &value) in current_vals.iter().enumerate() {
             if i == 0 {
                 line.push('(');
             }
+            // добавление переменной в выражение
             if value == !func_value_skip {
                 line.push_str(&format!("x{}", i + 1));
             } else {
                 line.push_str(&format!("-x{}", i + 1));
             }
+            // добавление закрывающей скобки в конъюнкт/дизъюнкт
             if i == current_vals.len() - 1 {
                 line.push(')');
             } else {
-                line.push(symbol[j]);
+                // поставить оператор внутри конъюнкта/дизъюнкта
+                line.push(operator[j]);
             }
         }
         expr.push_str(&line);
@@ -47,13 +52,13 @@ fn get_expression(
     expr
 }
 
-pub fn get_fdnf(
+pub fn get_pdnf(
     func: &util::BooleanFunction
 ) -> String {
     get_expression(func, false)
 }
 
-pub fn get_fknf(
+pub fn get_pcnf(
     func: &util::BooleanFunction
 ) -> String {
     get_expression(func, true)
@@ -68,9 +73,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_fdnf() {
+    fn test_pdnf() {
         let func = util::BooleanFunction::from("00010111").unwrap();
-        let expr = get_fdnf(&func);
+        let expr = get_pdnf(&func);
         //println!("{}", expr);
 
         let r = task6and7::check_dnf(func, &expr).unwrap();
@@ -79,12 +84,12 @@ mod tests {
     }
 
     #[test]
-    fn test_fknf() {
+    fn test_pcnf() {
         let func = util::BooleanFunction::from("00010111").unwrap();
-        let expr = get_fknf(&func);
-        //println!("{}", expr);
+        let expr = get_pcnf(&func);
+        println!("{}", expr);
 
-        let r = task6and7::check_knf(func, &expr).unwrap();
+        let r = task6and7::check_cnf(func, &expr).unwrap();
 
         assert_eq!(r, true);
     }
@@ -93,16 +98,16 @@ mod tests {
     fn test_random() {
 
         let func = util::BooleanFunction::with_count_args(4);
-        let expr = get_fdnf(&func);
+        let expr = get_pdnf(&func);
 
         let r = task6and7::check_dnf(func, &expr).unwrap();
         assert_eq!(r, true);
 
 
         let func = util::BooleanFunction::with_count_args(4);
-        let expr = get_fknf(&func);
+        let expr = get_pcnf(&func);
 
-        let r = task6and7::check_knf(func, &expr).unwrap();
+        let r = task6and7::check_cnf(func, &expr).unwrap();
         assert_eq!(r, true);
 
     }

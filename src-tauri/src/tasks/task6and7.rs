@@ -14,9 +14,9 @@ pub fn check_dnf(
     expression: &str
 ) -> Result<bool, String> {
     if !func.have_dnf() {
-        return Err("The function does not have knf".to_string())
+        return Err("The function does not have cnf".to_string())
     }
-    // выражение
+    // получаем выражение
     let expression = parser::parse::get_ast_tree(expression)?;
 
     if !parser::validate::is_dnf(&expression) {
@@ -30,18 +30,18 @@ pub fn check_dnf(
 
 /// На вход булевая функция и expression пользователя
 /// Если функция не может иметь КНФ, то она вернет ошибку
-pub fn check_knf(
+pub fn check_cnf(
     func: util::BooleanFunction,
     expression: &str
 ) -> Result<bool, String> {
-    if !func.have_knf() {
-        return Err("function no has knf".to_string());
+    if !func.have_cnf() {
+        return Err("function no has cnf".to_string());
     }
-    // выражение
+    // получаем выражение
     let expression = parser::parse::get_ast_tree(expression)?;
 
-    if !parser::validate::is_knf(&expression) {
-        return Err("This is not KNF".to_string());
+    if !parser::validate::is_cnf(&expression) {
+        return Err("This is not CNF".to_string());
     }
     brute_func_vals(expression, func)
 }
@@ -94,9 +94,9 @@ mod tests {
     }
 
     #[test]
-    fn test_knf_1111() {
+    fn test_cnf_1111() {
         let func = util::BooleanFunction::from("1111").unwrap();
-        let r = check_knf(func, "");
+        let r = check_cnf(func, "");
         assert_eq!(r.is_err(), true);
     }
 
@@ -114,14 +114,14 @@ mod tests {
     }
 
     #[test]
-    fn test_knf() {
+    fn test_cnf() {
         let func_vector = "00010111";
         let func = util::BooleanFunction::from(func_vector).unwrap();
-        let r = check_knf(func.clone(), " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
+        let r = check_cnf(func.clone(), " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
 
         assert_eq!(r, true);
 
-        let r = check_knf(func, " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v -x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
+        let r = check_cnf(func, " (x1 v x2 v x3) & (x1 v x2 v -x3) & ( x1 v -x2 v -x3 ) & ( -x1 v x2 v x3 ) ").unwrap();
 
         assert_eq!(r, false);
 
