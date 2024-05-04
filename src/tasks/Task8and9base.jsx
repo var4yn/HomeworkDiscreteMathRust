@@ -4,22 +4,6 @@ import { useInputHandler } from "../utils/handlers";
 
 import { invoke } from "@tauri-apps/api/tauri";
 
-function shielding( string ) {
-    let str = "";
-    for(let i = 0; i < string.length; i++) {
-        if( string[i] === '-' ) {
-            str += "";
-        } else {
-            str += string[i];
-        }
-    }
-    return (
-        <>
-            {str}
-        </>
-    )
-}
-
 const Task8and9base = ({nameFunction}) => {
 
     const [output, setOutput] = useState();

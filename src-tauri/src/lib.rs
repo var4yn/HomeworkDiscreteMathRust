@@ -19,6 +19,8 @@ mod client_functions {
     pub mod page7;
     pub mod page8;
     pub mod page9;
+    pub mod page10;
+    pub mod page11;
     pub mod client_utils;
 }
 
@@ -37,6 +39,8 @@ pub fn main() {
             client_functions::page7::check_cnf,
             client_functions::page8::get_pdnf,
             client_functions::page9::get_pcnf,
+            client_functions::page10::match_function_to_precomplete_classes,
+            client_functions::page11::match_functions_to_precomplete_classes,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

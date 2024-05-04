@@ -4,7 +4,6 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { MxArgRender } from "../utils/renders";
 import { useInputHandler } from "../utils/handlers";
 import OutputComponent from "../components/OutputComponent";
-import OkOrInvalidComponent from "../components/OkOrInvalidComponent";
 import InputBooleanFunction from "../components/InputBooleanFunction";
 
 

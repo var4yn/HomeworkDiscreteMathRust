@@ -183,8 +183,16 @@ pub mod parse {
 pub mod validate {
     use super::*;
 
+    
     /// с помощью dfs проверяет повторяются ли внутри конъюнтков/дизъюнктов переменные одного имени
     /// проверяет валидность конъюнктов/дизъюнктов
+    ///
+    /// x1&x2&x2 -> false т.к. повторилось x2 
+    /// (x1 v x2 v -x2 ) -> false т.к. повторилось x2
+    /// 
+    /// Проверяет, что после определенной операции нет другой
+    /// Проще говоря, проверка на конъюнкт/дизъюнкт
+    /// в ( x1 & x2 & x3 ) - валидный конъюнкт, но (x1 & x2 & x3 v x4) - невалидный
     fn dfs_n(expression: &Expression, ch: char, mut flag: bool) -> (bool, HashSet<String>) {
         let mut set : HashSet<String> = HashSet::new();
     
@@ -338,15 +346,4 @@ mod tests {
         let expression = " x1 v x2 ";
         assert_eq!(parse::get_ast_tree(expression).unwrap().evaluate(&get_map_from_vals(vec![true, false])), Ok(true));
     }
-
-
-    #[test]
-    fn test_safe_ast() {
-        let expr = " x1 v 1&0 ";
-
-        let r = parse::get_ast_tree(expr);
-        let result = r.unwrap().evaluate(&get_map_from_vals(vec![false])).unwrap();
-        println!("result = {}", result);
-    }
-
 }

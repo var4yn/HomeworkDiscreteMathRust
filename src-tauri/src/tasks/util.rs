@@ -1,7 +1,7 @@
 use rand::Rng;
 
 /// Хранит валидное значение булевой функции
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct BooleanFunction {
     func: String,
     count_arguments: u8,

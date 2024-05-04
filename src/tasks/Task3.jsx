@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useInputHandler, useNumArgHandler } from "../utils/handlers";
 
-import { OkRender, InvalidRender, MxArgRender } from "../utils/renders";
+import { MxArgRender } from "../utils/renders";
 
 import { invoke } from "@tauri-apps/api/tauri";
 import OutputComponent from "../components/OutputComponent";
-import OkOrInvalidComponent from "../components/OkOrInvalidComponent";
 import InputBooleanFunction from "../components/InputBooleanFunction";
 
 const Task3 = () => {
