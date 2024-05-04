@@ -1,11 +1,11 @@
-use std::{collections::HashSet};
+use std::collections::HashSet;
 
 use crate::tasks::{task10and11, util};
 
 /// Вернет T0, T1, S, M, L
 #[tauri::command]
-pub fn match_functions_to_precomplete_classes(functions: &str) -> Result<( bool, [bool; 5] ), String> {
-    let funcs = parse_boolean_functions_set(functions)?;
+pub fn match_functions_to_precomplete_classes(function: &str) -> Result<( bool, [bool; 5] ), String> {
+    let funcs = parse_boolean_functions_set(function)?;
     Ok(task10and11::match_functions_to_precomplete_classes(funcs))
 }
 

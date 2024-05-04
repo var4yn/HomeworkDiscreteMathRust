@@ -7,6 +7,9 @@ import Task6 from "../tasks/Task6";
 import Task7 from "../tasks/Task7";
 import Task8 from "../tasks/Task8";
 import Task9 from "../tasks/Task9";
+import Task10 from "../tasks/Task10";
+import Task11 from "../tasks/Task11";
+import Task12 from "../tasks/Task12";
 
 const pages_info = {
 
@@ -57,21 +60,21 @@ const pages_info = {
     },
     "10" : {
         title: "Task10",
-        component: Task1,
+        component: Task10,
         description: "Игра. Предполные классы б.ф. \
         Система предлагает вектор функции. Пользователь должен выбрать предполные классы, которым эта функция принадлежит.\
         Система определяет правильно выбраны классы или нет.",
     },
     "11" : {
         title: "Task11",
-        component: Task1,
+        component: Task11,
         description: "Игра. Полные системы б.ф. Система предлагает набор векторов функций.\
         Пользователь определяет полным или нет является набор функций. Если система б.ф. неполна, то пользователь\
         должен указать замкнутый класс, которому набор функций принадлежит.",
     },
     "12" : {
         title: "Task12",
-        component: Task1,
+        component: Task12,
         description: "Построение ДНФ с помощью метода Куайна — Мак-Класки.",
     },
 
