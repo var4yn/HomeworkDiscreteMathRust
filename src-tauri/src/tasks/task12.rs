@@ -112,7 +112,7 @@ fn create_groups(
         }
         let cnt = args.iter().filter(|&&el| el == true).count();
         mx_cnt = max(mx_cnt, cnt);
-        groups.entry(cnt).or_insert(vec![]).push(to_chars_from_vc_bool(args));
+        groups.entry(cnt).or_insert(vec![]).push(vc_bool_to_chars(args));
     }
 
     (groups, mx_cnt)
@@ -150,7 +150,7 @@ fn build_unions(
 }
 
 /// Переводит из векторов bool в вектор символов
-fn to_chars_from_vc_bool(
+fn vc_bool_to_chars(
     value: Vec<bool>,
 ) -> Vec<char> {
     let mut str = Vec::new();

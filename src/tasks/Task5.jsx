@@ -4,35 +4,10 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 import CheckAndPlayComponent from "../components/CheckAndPlayComponent";
 import OutputComponent from "../components/OutputComponent";
+import VarButton from "../components/VarButton";
+import Indicator from "../components/Indicator";
 
 import { getRandomFrom2to4 } from "../utils/util";
-
-const VarButton = ( {val, index, userVals, onClick} ) => {
-    const baseStyle = "block border-2 py-1 px-1 text-center select-none cursor-pointer transition-colors ";
-    const greenStyle = baseStyle + "border-green-300 bg-green-200";
-    const redStyle = baseStyle + "border-red-400 bg-red-300";
-
-
-    return (
-        <div className={ userVals[index] ? greenStyle : redStyle } onClick={onClick}>{val}</div>
-    )
-}
-
-const Indicator = ( { isCheck, index, vals } ) => {        
-
-    function getStyle() {
-        if( isCheck && vals[index] !== true ) {
-            return "bg-red-500 p-1";
-        }
-        return "bg-green-500 p-1";
-    }
-
-    return (
-        <div className={`transition-colors ${getStyle()}`}>
-        </div>
-    )
-
-}
 
 function get_vars( n ) {
     let btns = [];
@@ -77,8 +52,6 @@ function Task5() {
             setVals(r);
             setOutput(msg);
             setErr("");
-            
-            //console.log(r);
         })
         .catch(err => {
             setErr(err);
