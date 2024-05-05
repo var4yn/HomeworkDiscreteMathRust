@@ -1,6 +1,6 @@
 use std::{cmp::{max, min}, collections::HashMap};
 
-use super::util;
+use super::{util, task8and9::get_pdnf};
 
 /// Построение ДНФ с помощью метода Куайна — Мак-Класки
 
@@ -17,7 +17,10 @@ pub fn get_expression_dnf_with_qms(
     result.sort();
     result.dedup(); // удаляем дубликаты
     
-    get_expression(result)
+    match get_expression(result) {
+        exp if exp == "" => get_pdnf(&func),
+        res => res,
+    }
 }
 
 fn get_expression(vc: Vec<Vec<char>>) -> String {

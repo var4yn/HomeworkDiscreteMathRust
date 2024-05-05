@@ -18,7 +18,6 @@ async function generateFuncs() {
 }
 
 function handleInvoke(r, setVals, setMsg) {
-    console.log(r);
     setVals(r[1]);
     setMsg(r[0]);
 

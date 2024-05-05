@@ -4,13 +4,13 @@ import { useInputHandler } from "../utils/handlers";
 
 import { invoke } from "@tauri-apps/api/tauri";
 
-const Task8and9base = ({nameFunction, mn}) => {
+const Task8and9base = ({nameFunction}) => {
 
     const [output, setOutput] = useState();
 
     const {
         inputValue, isOk, handleInput
-    } = useInputHandler( {mn: mn ? mn : 1} );
+    } = useInputHandler( {mn: 1} );
 
     useEffect(() => {
         if(!isOk) {

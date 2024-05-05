@@ -66,8 +66,8 @@ mod tests {
 
     #[test]
     fn test_empty() {
-        let func = "10100001, 00111100";
-        println!("{:?}", match_functions_to_precomplete_classes(func));
+        let func = "01110000, 10011001, 01011000";
+        assert_eq!(3usize, parse_boolean_functions_set(func).unwrap().len());
     }
 
 }

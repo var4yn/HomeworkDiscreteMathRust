@@ -41,7 +41,6 @@ const Task10and11base = ( {nameFunction, generateFunc, handleInvoke, isVisiableM
         
         try {
             const func = await generateFunc();
-            console.log(func);
             setIsCheck(false);
             setUserVals( [true, true, true, true, true] );
             const r = await invoke(nameFunction, { function: func });
