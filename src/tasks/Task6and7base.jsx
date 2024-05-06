@@ -15,7 +15,7 @@ function Task6and7base( { nameFunction } ) {
     const [err, setErr] = useState("");
 
     const [userErr, setUserErr] = useState("");
-    const [result, setResult] = useState(false);
+    const [result, setResult] = useState(true);
 
     function handleInput(event) {
         setExpression( event.target.value );

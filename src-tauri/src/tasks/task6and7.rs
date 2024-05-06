@@ -14,7 +14,7 @@ pub fn check_dnf(
     expression: &str
 ) -> Result<bool, String> {
     if !func.have_dnf() {
-        return Err("The function does not have cnf".to_string())
+        return Err("The function does not have dnf".to_string())
     }
     // получаем выражение
     let expression = parser::parse::get_ast_tree(expression)?;
@@ -35,7 +35,7 @@ pub fn check_cnf(
     expression: &str
 ) -> Result<bool, String> {
     if !func.have_cnf() {
-        return Err("function no has cnf".to_string());
+        return Err("The function does not have cnf".to_string());
     }
     // получаем выражение
     let expression = parser::parse::get_ast_tree(expression)?;
